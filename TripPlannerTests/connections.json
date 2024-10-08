@@ -1,0 +1,199 @@
+{
+  "connections": [
+    {
+      "from": "London",
+      "to": "Paris",
+      "coordinates": {
+        "from": {
+          "lat": 51.5285582,
+          "long": -0.241681
+        },
+        "to": {
+          "lat": 48.856613,
+          "long": 2.352222
+        }
+      },
+      "price": 100
+    },
+    {
+      "from": "Paris",
+      "to": "Berlin",
+      "coordinates": {
+        "from": {
+          "lat": 48.856613,
+          "long": 2.352222
+        },
+        "to": {
+          "lat": 52.520008,
+          "long": 13.404954
+        }
+      },
+      "price": 120
+    },
+    {
+      "from": "Berlin",
+      "to": "Vienna",
+      "coordinates": {
+        "from": {
+          "lat": 52.520008,
+          "long": 13.404954
+        },
+        "to": {
+          "lat": 48.208174,
+          "long": 16.373819
+        }
+      },
+      "price": 80
+    },
+    {
+      "from": "Vienna",
+      "to": "Istanbul",
+      "coordinates": {
+        "from": {
+          "lat": 48.208174,
+          "long": 16.373819
+        },
+        "to": {
+          "lat": 41.008240,
+          "long": 28.978359
+        }
+      },
+      "price": 150
+    },
+    {
+      "from": "Istanbul",
+      "to": "Dubai",
+      "coordinates": {
+        "from": {
+          "lat": 41.008240,
+          "long": 28.978359
+        },
+        "to": {
+          "lat": 25.276987,
+          "long": 55.296249
+        }
+      },
+      "price": 300
+    },
+    {
+      "from": "Dubai",
+      "to": "Mumbai",
+      "coordinates": {
+        "from": {
+          "lat": 25.276987,
+          "long": 55.296249
+        },
+        "to": {
+          "lat": 19.076090,
+          "long": 72.877426
+        }
+      },
+      "price": 200
+    },
+    {
+      "from": "Mumbai",
+      "to": "Singapore",
+      "coordinates": {
+        "from": {
+          "lat": 19.076090,
+          "long": 72.877426
+        },
+        "to": {
+          "lat": 1.352083,
+          "long": 103.819839
+        }
+      },
+      "price": 250
+    },
+    {
+      "from": "Singapore",
+      "to": "Sydney",
+      "coordinates": {
+        "from": {
+          "lat": 1.352083,
+          "long": 103.819839
+        },
+        "to": {
+          "lat": -33.868820,
+          "long": 151.209290
+        }
+      },
+      "price": 400
+    },
+    {
+      "from": "Sydney",
+      "to": "Auckland",
+      "coordinates": {
+        "from": {
+          "lat": -33.868820,
+          "long": 151.209290
+        },
+        "to": {
+          "lat": -36.848461,
+          "long": 174.763336
+        }
+      },
+      "price": 300
+    },
+    {
+      "from": "Auckland",
+      "to": "Tokyo",
+      "coordinates": {
+        "from": {
+          "lat": -36.848461,
+          "long": 174.763336
+        },
+        "to": {
+          "lat": 35.652832,
+          "long": 139.839478
+        }
+      },
+      "price": 500
+    },
+    {
+      "from": "Tokyo",
+      "to": "Los Angeles",
+      "coordinates": {
+        "from": {
+          "lat": 35.652832,
+          "long": 139.839478
+        },
+        "to": {
+          "lat": 34.052235,
+          "long": -118.243683
+        }
+      },
+      "price": 550
+    },
+    {
+      "from": "Los Angeles",
+      "to": "New York",
+      "coordinates": {
+        "from": {
+          "lat": 34.052235,
+          "long": -118.243683
+        },
+        "to": {
+          "lat": 40.730610,
+          "long": -73.935242
+        }
+      },
+      "price": 250
+    },
+    {
+      "from": "New York",
+      "to": "London",
+      "coordinates": {
+        "from": {
+          "lat": 40.730610,
+          "long": -73.935242
+        },
+        "to": {
+          "lat": 51.5285582,
+          "long": -0.241681
+        }
+      },
+      "price": 600
+    }
+  ]
+}
