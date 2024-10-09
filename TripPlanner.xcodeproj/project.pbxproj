@@ -35,6 +35,8 @@
 		A38B95E92CB5C63D00EFF114 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A38B95E82CB5C63D00EFF114 /* CoreData.framework */; };
 		A38B95EC2CB5C67500EFF114 /* TripPlannerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A38B95EA2CB5C67500EFF114 /* TripPlannerModel.xcdatamodeld */; };
 		A38B95FB2CB5C97F00EFF114 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38B95FA2CB5C97F00EFF114 /* PersistenceService.swift */; };
+		A38B96022CB687BF00EFF114 /* CitySelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38B96012CB687BF00EFF114 /* CitySelectorViewModel.swift */; };
+		A38B96042CB68AB400EFF114 /* CitySelectorViewModelUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38B96032CB68AB400EFF114 /* CitySelectorViewModelUnitTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		A38B95E82CB5C63D00EFF114 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A38B95EB2CB5C67500EFF114 /* TripPlannerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TripPlannerModel.xcdatamodel; sourceTree = "<group>"; };
 		A38B95FA2CB5C97F00EFF114 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		A38B96012CB687BF00EFF114 /* CitySelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelectorViewModel.swift; sourceTree = "<group>"; };
+		A38B96032CB68AB400EFF114 /* CitySelectorViewModelUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelectorViewModelUnitTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				A38B95AD2CB483C600EFF114 /* CitySelectorView.swift */,
+				A38B96012CB687BF00EFF114 /* CitySelectorViewModel.swift */,
 			);
 			path = CitySelector;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 				A38B95C42CB4895200EFF114 /* TripPlannerTests.swift */,
 				A38B95D02CB527EA00EFF114 /* MockTripPlannerService.swift */,
 				A38B95D32CB5281500EFF114 /* TripPlannerServiceUnitTests.swift */,
+				A38B96032CB68AB400EFF114 /* CitySelectorViewModelUnitTests.swift */,
 				A38B95D52CB528EB00EFF114 /* TripPlannerViewModelUnitTests.swift */,
 				A38B95D92CB5294A00EFF114 /* RouteMapViewModelUnitTests.swift */,
 				A38B95DB2CB52A9400EFF114 /* connections.json */,
@@ -390,6 +396,7 @@
 				A38B95AA2CB4775200EFF114 /* ConfigHelper.swift in Sources */,
 				A38B95712CB0400800EFF114 /* TripPlannerApp.swift in Sources */,
 				A38B95872CB2AC3600EFF114 /* RouteMapView.swift in Sources */,
+				A38B96022CB687BF00EFF114 /* CitySelectorViewModel.swift in Sources */,
 				A38B95CC2CB5123E00EFF114 /* TripPlannerCoordinator.swift in Sources */,
 				A38B95B42CB4862C00EFF114 /* RouteMapViewModel.swift in Sources */,
 				A38B95EC2CB5C67500EFF114 /* TripPlannerModel.xcdatamodeld in Sources */,
@@ -404,6 +411,7 @@
 				A38B95D42CB5281500EFF114 /* TripPlannerServiceUnitTests.swift in Sources */,
 				A38B95C52CB4895200EFF114 /* TripPlannerTests.swift in Sources */,
 				A38B95DA2CB5294A00EFF114 /* RouteMapViewModelUnitTests.swift in Sources */,
+				A38B96042CB68AB400EFF114 /* CitySelectorViewModelUnitTests.swift in Sources */,
 				A38B95D12CB527EA00EFF114 /* MockTripPlannerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

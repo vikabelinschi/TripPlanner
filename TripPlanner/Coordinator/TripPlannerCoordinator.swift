@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 // MARK: - TripPlannerCoordinator
-class TripPlannerCoordinator: ObservableObject {
+final class TripPlannerCoordinator: ObservableObject {
 
     // MARK: - Published Proerties
     @Published var path = NavigationPath()
@@ -20,7 +20,7 @@ class TripPlannerCoordinator: ObservableObject {
     var currentRouteMapViewModel: RouteMapViewModel?
 
     // MARK: - Make trip planner view
-    func makeTripPlannerView() -> TripPlannerView {
+    func makeTripPlannerView() -> TripPlannerView<TripPlannerViewModel> {
         return TripPlannerView(viewModel: self.tripPlannerViewModel)
     }
 

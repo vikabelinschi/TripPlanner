@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 // MARK: - Persistence Service
-class PersistenceService {
+final class PersistenceService {
 
     // MARK: - Static Properties
     static let shared = PersistenceService()

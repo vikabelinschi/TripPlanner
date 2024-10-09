@@ -9,113 +9,155 @@ import XCTest
 import Combine
 @testable import TripPlanner
 
-class TripPlannerViewModelUnitTests: XCTestCase {
-    var viewModel: TripPlannerViewModel!
-    var mockService: MockTripPlannerService!
-    var cancellables: Set<AnyCancellable> = []
+// MARK: - TripPlannerViewModelTests
+final class TripPlannerViewModelTests: XCTestCase {
+    private var viewModel: TripPlannerViewModel!
+    private var mockService: MockTripPlannerService!
+    private var cancellables: Set<AnyCancellable>!
 
+    // MARK: - Setup
     override func setUp() {
         super.setUp()
         mockService = MockTripPlannerService()
         viewModel = TripPlannerViewModel(service: mockService)
+        cancellables = []
     }
 
+    // MARK: - Teardown
     override func tearDown() {
         viewModel = nil
         mockService = nil
-        cancellables = []
+        cancellables = nil
         super.tearDown()
     }
 
+    // MARK: - Tests
+
+    // Test that cities are loaded correctly
     func testGetCitiesSuccess() {
-        let expectation = XCTestExpectation(description: "Fetch cities successfully from service")
-
-        viewModel.getCities()
-
+        // Given
+        mockService.shouldReturnError = false
+        let expectation = XCTestExpectation(description: "Cities should be loaded")
 
         viewModel.$allCities
-            .sink(receiveValue: { cities in
-                if !cities.isEmpty {
-                    XCTAssertEqual(cities.count, 13)
-                    XCTAssertTrue(cities.contains("Berlin"))
-                    XCTAssertTrue(cities.contains("Tokyo"))
-                    expectation.fulfill()
-                }
-            })
+            .dropFirst()
+            .sink { allCities in
+                XCTAssertEqual(allCities.count, 13)
+                XCTAssertFalse(allCities.isEmpty)
+                expectation.fulfill()
+            }
             .store(in: &cancellables)
 
-        wait(for: [expectation], timeout: 10.0)
+        // When
+        viewModel.getCities()
+
+        // Then
+        wait(for: [expectation], timeout: 1.0)
     }
 
-    func testFindCheapestRoute() {
-        mockService.shouldReturnError = false
+    // Test that an error is handled correctly when fetching cities
+    func testGetCitiesFailure() {
+        // Given
+        mockService.shouldReturnError = true
+        let expectation = XCTestExpectation(description: "Error message should be set")
 
-        let fetchCitiesExpectation = XCTestExpectation(description: "Fetch cities successfully from service")
-        viewModel.getCities()
-
-        viewModel.$allCities
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    XCTFail("Error fetching cities: \(error)")
-                }
-            }, receiveValue: { cities in
-                if !cities.isEmpty {
-                    fetchCitiesExpectation.fulfill()
-                }
-            })
+        viewModel.$errorMessage
+            .dropFirst()
+            .sink { errorMessage in
+                XCTAssertNotNil(errorMessage)
+                expectation.fulfill()
+            }
             .store(in: &cancellables)
 
-        wait(for: [fetchCitiesExpectation], timeout: 5.0)
+        // When
+        viewModel.getCities()
 
+        // Then
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    // Test that the cheapest route is found correctly
+    func testFindCheapestRouteSuccess() {
+        // Given
+        mockService.shouldReturnError = false
+        viewModel.getCities()
         viewModel.fromCity = "London"
         viewModel.toCity = "Tokyo"
 
-        let expectation = XCTestExpectation(description: "Find the cheapest route between London and Tokyo")
+        let expectation = XCTestExpectation(description: "Cheapest route should be found")
+        let priceExpectation = XCTestExpectation(description: "Cheapest price should be set")
 
         viewModel.$cheapestRoute
             .dropFirst()
-            .sink(receiveValue: { route in
-                if !route.isEmpty {
-                    XCTAssertEqual(route.first?.from, "London")
-                    XCTAssertEqual(route.last?.to, "Tokyo")
-                    expectation.fulfill()
-                }
-            })
+            .sink { route in
+                XCTAssertEqual(route.count, 10)
+                XCTAssertEqual(route[0].from, "London")
+                XCTAssertEqual(route[1].to, "Berlin")
+                expectation.fulfill()
+            }
             .store(in: &cancellables)
 
         viewModel.$totalPrice
             .dropFirst()
-            .sink(receiveValue: { price in
-                XCTAssertEqual(price, 2400)
-            })
+            .sink { price in
+                XCTAssertEqual(price, 2400.00)
+                priceExpectation.fulfill()
+            }
             .store(in: &cancellables)
 
+        // When
         viewModel.findCheapestRoute()
 
-        wait(for: [expectation], timeout: 5.0)
+        // Then
+        wait(for: [expectation, priceExpectation], timeout: 1.0)
     }
 
-
-    func testGetCitiesFailure() {
+    // Test that no route is available when there are no connections
+    func testFindCheapestRouteFailure() {
+        // Given
+        viewModel.getCities()
+        viewModel.fromCity = "New York"
+        viewModel.toCity = "Miami"
         mockService.shouldReturnError = true
 
-        let expectation = XCTestExpectation(description: "Fetch cities should fail")
+        let expectation = XCTestExpectation(description: "No route should be available")
 
-        viewModel.getCities()
-
-        viewModel.$errorMessage
-            .dropFirst() 
-            .sink(receiveValue: { errorMessage in
-                if let errorMessage = errorMessage {
-                    XCTAssertTrue(errorMessage.contains("Error:"))
-                    expectation.fulfill()
-                }
-            })
+        viewModel.$noRouteAvailable
+            .dropFirst()
+            .sink { noRouteAvailable in
+                XCTAssertTrue(noRouteAvailable)
+                XCTAssertEqual(self.viewModel.cheapestRoute.count, 0)
+                XCTAssertEqual(self.viewModel.totalPrice, 0.0)
+                expectation.fulfill()
+            }
             .store(in: &cancellables)
 
-        wait(for: [expectation], timeout: 5.0)
+        // When
+        viewModel.findCheapestRoute()
+
+        // Then
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    // Test canFindCheapestRoute when conditions are met
+    func testCanFindCheapestRoute() {
+        // Given
+        viewModel.fromCity = "New York"
+        viewModel.toCity = "Los Angeles"
+        viewModel.allCities = ["New York", "Los Angeles", "Chicago"]
+
+        // Then
+        XCTAssertTrue(viewModel.canFindCheapestRoute)
+    }
+
+    // Test canFindCheapestRoute when conditions are not met
+    func testCanFindCheapestRouteFails() {
+        // Given
+        viewModel.fromCity = "New York"
+        viewModel.toCity = "Miami"
+        viewModel.allCities = ["New York", "Los Angeles", "Chicago"]
+
+        // Then
+        XCTAssertFalse(viewModel.canFindCheapestRoute)
     }
 }

@@ -14,7 +14,7 @@ protocol TripPlannerService {
 }
 
 // MARK: - Trip Planner Service Implementation
-class TripPlannerServiceImp: TripPlannerService {
+final class TripPlannerServiceImp: TripPlannerService {
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Fetch connections

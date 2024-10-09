@@ -8,11 +8,27 @@
 import Foundation
 import Combine
 
+// MARK: - TripPlannerViewModelProtocol
+protocol TripPlannerViewModelProtocol: AnyObject, ObservableObject {
+    var fromCity: String? { get set }
+    var toCity: String? { get set }
+    var cheapestRoute: [Connection] { get set }
+    var totalPrice: Double { get set }
+    var cityLocations: [String: Location] { get set }
+    var allCities: [String] { get set }
+    var errorMessage: String? { get set }
+    var noRouteAvailable: Bool { get set }
+    var canFindCheapestRoute: Bool { get }
+
+    func getCities()
+    func findCheapestRoute()
+}
+
+
 // MARK: - TripPlannerViewModel
-class TripPlannerViewModel: ObservableObject {
+final class TripPlannerViewModel: TripPlannerViewModelProtocol {
 
     // MARK: - Published Properties
-    @Published var connections: [Connection] = []
     @Published var fromCity: String?
     @Published var toCity: String?
     @Published var cheapestRoute: [Connection] = []
@@ -24,9 +40,10 @@ class TripPlannerViewModel: ObservableObject {
 
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
+    private var connections: [Connection] = []
 
     // MARK: - Dependencies
-    let service: TripPlannerService
+    private let service: TripPlannerService
 
     // MARK: - Initializer
     init(service: TripPlannerService) {

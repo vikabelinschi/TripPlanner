@@ -9,8 +9,20 @@ import Foundation
 import SwiftUI
 import MapKit
 
+// MARK: - RouteMapViewModelProtocol
+protocol RouteMapViewModelProtocol: AnyObject, ObservableObject {
+    var region: MKCoordinateRegion { get set }
+    var annotations: [CityAnnotation] { get set }
+    var polylines: [[CoordinatePoint]] { get set }
+    var route: [Connection] { get }
+    var price: Double { get }
+
+    func setupMapData()
+    func calculateRegion(for coordinates: [CLLocationCoordinate2D]) -> MKCoordinateRegion
+}
+
 // MARK: - RouteMapViewModel Class
-class RouteMapViewModel: ObservableObject {
+final class RouteMapViewModel: RouteMapViewModelProtocol {
 
     // MARK: - Published Properties
     @Published var region: MKCoordinateRegion = MKCoordinateRegion(
@@ -67,10 +79,17 @@ class RouteMapViewModel: ObservableObject {
 
     // MARK: - Calculate Map Region
     func calculateRegion(for coordinates: [CLLocationCoordinate2D]) -> MKCoordinateRegion {
-        var minLat = coordinates.first?.latitude ?? 0
-        var maxLat = coordinates.first?.latitude ?? 0
-        var minLon = coordinates.first?.longitude ?? 0
-        var maxLon = coordinates.first?.longitude ?? 0
+        guard !coordinates.isEmpty else {
+            return MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
+                span: MKCoordinateSpan(latitudeDelta: 50, longitudeDelta: 50)
+            )
+        }
+
+        var minLat = coordinates.first!.latitude
+        var maxLat = coordinates.first!.latitude
+        var minLon = coordinates.first!.longitude
+        var maxLon = coordinates.first!.longitude
 
         for coord in coordinates {
             minLat = min(minLat, coord.latitude)
@@ -93,4 +112,5 @@ class RouteMapViewModel: ObservableObject {
             span: MKCoordinateSpan(latitudeDelta: spanLat, longitudeDelta: spanLon)
         )
     }
+
 }
